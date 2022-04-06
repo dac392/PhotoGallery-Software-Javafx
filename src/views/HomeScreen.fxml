@@ -12,8 +12,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.HomeScreenController">
    <children>
       <BorderPane layoutX="116.0" layoutY="60.0" prefHeight="200.0" prefWidth="200.0" stylesheets="@../css/UserScreen.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <top>
@@ -24,7 +23,7 @@
                         <Insets right="100.0" />
                      </HBox.margin>
                   </Label>
-                  <Button mnemonicParsing="false" styleClass="nav-buttons" text="New Album">
+                  <Button mnemonicParsing="false" onAction="#NewAlbum" styleClass="nav-buttons" text="New Album">
                      <HBox.margin>
                         <Insets left="10.0" />
                      </HBox.margin>
@@ -32,7 +31,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
-                  <Button mnemonicParsing="false" styleClass="nav-buttons" text="Rename Album">
+                  <Button mnemonicParsing="false" onAction="#RenameAlbum" styleClass="nav-buttons" text="Rename Album">
                      <HBox.margin>
                         <Insets left="10.0" />
                      </HBox.margin>
@@ -48,7 +47,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
-                  <Button mnemonicParsing="false" styleClass="nav-buttons" text="Log out">
+                  <Button mnemonicParsing="false" onAction="#Logout" styleClass="nav-buttons" text="Log out">
                      <HBox.margin>
                         <Insets left="10.0" />
                      </HBox.margin>

@@ -11,8 +11,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ImageViewController">
    <children>
       <BorderPane layoutX="68.0" layoutY="49.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <top>
@@ -23,13 +22,13 @@
                         <Insets left="20.0" right="130.0" />
                      </HBox.margin>
                   </Label>
-                  <Button mnemonicParsing="false" text="Add Photo" />
-                  <Button mnemonicParsing="false" text="Move Photo">
+                  <Button mnemonicParsing="false" onAction="#add" text="Add Photo" />
+                  <Button mnemonicParsing="false" onAction="#move" text="Move Photo">
                      <HBox.margin>
                         <Insets left="10.0" />
                      </HBox.margin>
                   </Button>
-                  <Button mnemonicParsing="false" text="Copy Photo">
+                  <Button mnemonicParsing="false" onAction="#copy" text="Copy Photo">
                      <HBox.margin>
                         <Insets left="10.0" />
                      </HBox.margin>
@@ -75,7 +74,7 @@
                               <Insets right="30.0" />
                            </HBox.margin>
                         </Button>
-                        <Button mnemonicParsing="false" text="Edit" />
+                        <Button mnemonicParsing="false" onAction="#edit" text="Edit" />
                         <Button mnemonicParsing="false" text="Next">
                            <HBox.margin>
                               <Insets left="30.0" />

@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import util.Database;
 
 public class Photos extends Application{
 
@@ -16,13 +17,11 @@ public class Photos extends Application{
 	
 	public void start(Stage primaryStage){
 		try {		
+			Database.init();
 			FXMLLoader loader = new FXMLLoader();   
 			loader.setLocation(getClass().getResource("/views/Login.fxml"));
-
 			AnchorPane root = (AnchorPane)loader.load();
-
 //			LoginController controller = loader.getController();
-//			controller.start();
 		
 		
 			Scene scene = new Scene(root);
