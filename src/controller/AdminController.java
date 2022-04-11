@@ -1,77 +1,172 @@
 package controller;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import util.Database;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ListView;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Optional;
+import java.util.ArrayList;
+import model.serialController;
+/**
+ * Class that acts as the controller for the AdminView.fxml file.
+ * @author DiegoCastellanos dac392
+ * @author AbidAzad aa2177
+ */
 public class AdminController {
-	
+	//Buttons
+    @FXML private Button add;
+    @FXML private Button exit;
+    @FXML private Button delete;
+    //TextFields
     @FXML private TextField adminText;
+    
     @FXML private ListView<String> userList;
-    private ObservableList<String> obsList;
-    private ArrayList<String> usernames;
     
-    public void start() {
-    	usernames = Database.getUsernames();
-    	obsList = FXCollections.observableArrayList();
-    	userList.setItems(obsList);
-    	setList();
+    private ObservableList<String> obsList = FXCollections.observableArrayList(); 
+    private Stage a;
+    
+    private ArrayList<User> data = new ArrayList<User>();
+    serialController cereal;
+    /**
+	 * Initializes the controller and displays the list of user.
+	 * @param for the Main Stage Window.
+	 * @author AbidAzad aa2177
+	 */	    
+    public void start(Stage mainStage) {
+    	a = mainStage;
+    	
+		cereal = new serialController();
+    	try {
+			this.data = cereal.data();
+			for(User x : this.data) {
+	    		obsList.add(x.getUsername());
+	    	}
+	    	userList.setItems(obsList);
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+    	
+
     }
-    
-    @FXML void addUser(ActionEvent event) {
-    	if(adminText.getText().isBlank()) {
-    		ControllerUtility.showAlert("Error", "Missing Info", "Text box is empty");
-    		return;
+    /**
+	 * Adds a user based on admin input, provided there is input and not a duplicate. Updates data afterwards.
+	 * @param for the ActionEvent for the button click.
+	 * @author AbidAzad aa2177
+	 */	       
+    @FXML void add(ActionEvent event) {
+    	boolean repeat = false;
+    	if(adminText.getText().isEmpty()) {
+    		showAlert("Error", "Missing Info", "Box is empty");
     	}
-    	String newUsername = adminText.getText();
-    	for(String x : usernames) {
-    		if(x.equals(newUsername)){
-    			ControllerUtility.showAlert("Error", "Douplicate Item", "The username that you are trying to add already exists");
-    			return;
+    	
+    	else {
+    		for(User x: data) {
+    			if(x.getUsername().equals(adminText.getText())) {
+    				repeat = true;
+    				break;
+    			}
+    		}
+    		
+    		if(repeat) {
+    			showAlert("Error", "Duplicate", "User of that name already exists!");
+    		}
+    		else {
+    		data.add(new User(adminText.getText()));
+    		try {
+    			cereal = new serialController();
+				cereal.update(data);
+				obsList.clear();
+				for(User x : this.data) {
+		    		obsList.add(x.getUsername());
+		    	}
+		    	userList.setItems(obsList);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
     		}
     	}
-    	usernames.add(newUsername);
-    	Database.addNewUser(newUsername);
-    	setList();
     }
-    
+    /**
+	 * Returns back to login screen.
+	 * @param for the ActionEvent for the button click.
+	 * @author AbidAzad aa2177
+	 */	      
+    @FXML void exit(ActionEvent event) {
+    	 try {		
+				FXMLLoader loader = new FXMLLoader();   
+				loader.setLocation(getClass().getResource("/views/Login.fxml"));
+				
+				AnchorPane root = (AnchorPane)loader.load();
+				LoginController listController = loader.getController();
+				listController.start(a);
+				a.close();
 
-	@FXML void logout(ActionEvent event) throws IOException{
-    	Parent root = FXMLLoader.load(getClass().getResource("/views/Login.fxml"));
-    	Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-    	Scene scene = new Scene(root);
-    	
-    	stage.setScene(scene);
-    	stage.show();
-	}
-    
-	
-	/*
-	 * 
-	 *  Helper methods
-	 * 
-	 * */
-    private void setList() {
-    	obsList.clear();
-    	for(String user : usernames) {
-    		obsList.add(user);
+				Scene scene = new Scene(root);
+				a.setScene(scene);
+				a.show();
+				
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+    }
+    /**
+ 	 * Deletes a user and update user data.
+ 	 * @param for the ActionEvent for the button click.
+ 	 * @author AbidAzad aa2177
+ 	 */	     
+    @FXML void delete(ActionEvent event) {
+    	if(!userList.getSelectionModel().isEmpty()) {
+    		data.remove(userList.getSelectionModel().getSelectedIndex());
+    		try {
+				cereal.update(data);
+				obsList.clear();
+				for(User x : this.data) {
+		    		obsList.add(x.getUsername());
+		    	}
+		    	userList.setItems(obsList);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    		
     	}
-    	userList.setItems(obsList);
-	}
-
-	
+    
+    }
+    /**
+   	 * Helper Method that throws an alert.
+   	 * @param for the title of alert, String.
+   	 * @param for the header of alert, String.
+   	 * @param for the content of alert, String.
+   	 * @author DiegoCastellanos dac392
+   	 */	      
+    private void showAlert(String title, String header, String content) {
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setTitle(title);
+		alert.setHeaderText(header);
+		alert.setContentText(content);
+		alert.showAndWait();
+		
+	}   
 }

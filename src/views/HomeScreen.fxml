@@ -12,18 +12,19 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.HomeScreenController">
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"  fx:controller="controller.HomeScreenController">
    <children>
       <BorderPane layoutX="116.0" layoutY="60.0" prefHeight="200.0" prefWidth="200.0" stylesheets="@../css/UserScreen.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <top>
             <HBox alignment="CENTER" prefHeight="46.0" prefWidth="600.0">
                <children>
-                  <Label styleClass="username" text="Username">
+                  <Label id = "name" fx:id="name" styleClass="username" text="Username">
                      <HBox.margin>
                         <Insets right="100.0" />
                      </HBox.margin>
                   </Label>
-                  <Button mnemonicParsing="false" onAction="#NewAlbum" styleClass="nav-buttons" text="New Album">
+                  <Button id = "New_Album" fx:id="New_Album" onAction="#New_Album" mnemonicParsing="false" styleClass="nav-buttons" text="New Album">
                      <HBox.margin>
                         <Insets left="10.0" />
                      </HBox.margin>
@@ -31,7 +32,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#RenameAlbum" styleClass="nav-buttons" text="Rename Album">
+                  <Button id = "Rename_Album" fx:id="Rename_Album" onAction="#Rename_Album" mnemonicParsing="false" styleClass="nav-buttons" text="Rename Album">
                      <HBox.margin>
                         <Insets left="10.0" />
                      </HBox.margin>
@@ -39,7 +40,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
-                  <Button mnemonicParsing="false" styleClass="nav-buttons" text="Delete Album">
+                  <Button id = "delete" fx:id="delete" onAction="#delete" mnemonicParsing="false" styleClass="nav-buttons" text="Delete Album">
                      <HBox.margin>
                         <Insets left="10.0" />
                      </HBox.margin>
@@ -47,7 +48,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#Logout" styleClass="nav-buttons" text="Log out">
+                  <Button id = "Log_Out" fx:id="Log_Out" onAction="#Log_Out" mnemonicParsing="false" styleClass="nav-buttons" text="Log out">
                      <HBox.margin>
                         <Insets left="10.0" />
                      </HBox.margin>
@@ -66,11 +67,11 @@
                         <Insets left="100.0" right="100.0" top="10.0" />
                      </VBox.margin>
                   </TextField>
-                  <TableView prefHeight="304.0" prefWidth="600.0">
+                  <TableView  id = "albumList" fx:id="albumList" prefHeight="304.0" prefWidth="600.0">
                     <columns>
-                      <TableColumn prefWidth="303.0" text="Albums" />
-                      <TableColumn minWidth="0.0" prefWidth="141.0" text="Dates" />
-                        <TableColumn prefWidth="145.0" text="Number of Photos" />
+                      <TableColumn id = "albumName" fx:id="albumName" prefWidth="303.0" text="Albums" />                      
+                      <TableColumn id = "date" fx:id="date" minWidth="0.0" prefWidth="141.0" text="Dates" />
+                      <TableColumn id = "photoCount" fx:id="photoCount" prefWidth="145.0" text="Number of Photos" />
                     </columns>
                      <VBox.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="20.0" />
