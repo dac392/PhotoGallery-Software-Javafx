@@ -1,8 +1,10 @@
 package model;
 
 import java.util.*;
+
+import util.User;
+
 import java.io.*;
-import controller.User;
 
 /**
  * Class used to save and update user information inputed on the program.

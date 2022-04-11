@@ -1,8 +1,6 @@
-package controller;
+package util;
 import java.io.*;
 import java.util.*;
-
-import util.Manager;
 
 /**
  * Class that holds all the attributes of a Album.

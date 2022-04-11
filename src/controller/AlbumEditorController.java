@@ -26,6 +26,8 @@ import java.nio.file.Paths;
 import java.util.Optional;
 import java.util.ArrayList;
 import model.serialController;
+import util.Album;
+import util.User;
 /**
  * Class that acts as the controller for the AlbumEditor.fxml file.
  * @author DiegoCastellanos dac392

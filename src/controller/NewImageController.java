@@ -40,8 +40,10 @@ import java.util.Date;
 import java.util.HashMap;
 
 import model.serialController;
+import util.Album;
 import util.Manager;
 import util.Parser;
+import util.Photo;
 
 /**
  * Class that acts as the controller for the NewImage.fxml file.
@@ -82,8 +84,6 @@ public class NewImageController {
         });
     	
         dragged.setOnDragDropped(event -> {
-        	
-        	
             Dragboard r = event.getDragboard();
             if(event.getDragboard().hasFiles() && !nothingDragged){
             	
@@ -111,6 +111,7 @@ public class NewImageController {
 	 * Method that determines whether an image is added. If there is no photo input or a duplicate detected, it will send an alert. Otherwise, it will add the photo to the album.
 	 * @param for the ActionEvent for the button click.
 	 * @author AbidAzad aa2177
+	 * @author DiegoCastellanos
 	 */	    
     @FXML void OK(ActionEvent event) {
 		if(newPhoto == null) {
@@ -145,7 +146,7 @@ public class NewImageController {
 		}
 		Date date = Manager.getTime();
 		
-    	album.addPhoto(title, caption, date, tags, newPhoto.getAbsolutePath());
+    	album.addPhoto(title, caption, date, tags, newPhoto.toURI().toString()); //newPhoto.getAbsolutePath()
     	a.hide();
    }  
     /**

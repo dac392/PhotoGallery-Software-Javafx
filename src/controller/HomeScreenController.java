@@ -36,6 +36,9 @@ import java.nio.file.Paths;
 import java.util.Optional;
 import java.util.ArrayList;
 import model.serialController;
+import util.Album;
+import util.User;
+import util.albumReader;
 /**
  * Class that acts as the controller for the HomeScreen.fxml file.
  * @author DiegoCastellanos dac392

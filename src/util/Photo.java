@@ -1,4 +1,4 @@
-package controller;
+package util;
 
 import java.io.*;
 import java.util.*;
@@ -100,6 +100,12 @@ public class Photo implements Serializable {
 //		System.out.println(builder.toString());
 //		System.out.println(String.join("", builder));
 		return String.join("", builder);
+	}
+
+
+	public String getTitle() {
+		// TODO Auto-generated method stub
+		return this.title;
 	}
 	
 

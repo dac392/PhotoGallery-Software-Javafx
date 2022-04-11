@@ -3,6 +3,7 @@ import javafx.fxml.FXML;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -15,6 +16,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -47,6 +49,10 @@ import java.nio.file.Paths;
 import java.util.Optional;
 import java.util.ArrayList;
 import model.serialController;
+import util.Album;
+import util.Photo;
+import util.PhotoListItem;
+import util.User;
 
 /**
  * Class that acts as the controller for the ImageView.fxml file.
@@ -88,6 +94,7 @@ public class ImageViewController {
 	 * @param for the Album that holds the photos.
 	 * @param for the User that holds the album.
 	 * @author AbidAzad aa2177
+	 * @author diegocastellanos
 	 */	   
     public void start(Stage mainStage, Album gallery, User user) {
     	a = mainStage;
@@ -104,6 +111,12 @@ public class ImageViewController {
 		.selectedIndexProperty()
 		.addListener( (obs, oldVal, newVal) -> select(mainStage));
     	
+        photoList.setCellFactory(new Callback< ListView<Photo>, ListCell<Photo> >() {
+            @Override 
+            public ListCell<Photo> call(ListView<Photo> list) {
+                return new PhotoListItem();
+            }
+        });
     	
     	if(gallery.getPhotos().size() > 0) {
     		photoList.getSelectionModel().select(0);
@@ -120,6 +133,7 @@ public class ImageViewController {
 	 * Else, the method updates album, and then updates user data.
 	 * @param event ActionEvent for when the button is clicked.
 	 * @author AbidAzad aa2177
+	 * @author diegocastellanos
 	 */	     
     @FXML void add(ActionEvent event) {
 		 try {		
@@ -287,6 +301,12 @@ public class ImageViewController {
     	photoList.getSelectionModel().selectNext();
 	 }
     
+    /**
+     *	Event handler which deletes the currently selected Photo in the list view
+     *	@param event ActionEvent which triggered the event handler
+     *	@return void
+     *	@author diegocastellanos 
+     */
 	 @FXML void delete(ActionEvent event) {
 	    	if(!photoList.getSelectionModel().isEmpty()) {
 	    		
@@ -331,6 +351,12 @@ public class ImageViewController {
 	    
 	    }
     
+	 /**
+	  *	Event handler that brings the user back to the home screen
+	  *	@param event ActionEvent that triggered event handler
+	  *	@return void
+	  * @author diegocastellanos
+	  */
 	 @FXML void backToHome(ActionEvent event) throws IOException {
 			FXMLLoader loader = new FXMLLoader();   
 			loader.setLocation(getClass().getResource("/views/HomeScreen.fxml"));
@@ -357,8 +383,7 @@ public class ImageViewController {
         
         
 		if(selected != null) {
-	    	File img = new File(selected.getFilePath());
-	    	Image a = new Image(img.toURI().toString());
+	    	Image a = new Image(selected.getFilePath());
 	    	display.setImage(a);
 	    	caption.setText("Caption: "+selected.getCaption());
 	    	date.setText("Date: "+selected.getDate());
